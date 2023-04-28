@@ -1,0 +1,29 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: ssh pipelines pull 
+        uses: cross-the-world/ssh-pipeline@master
+        env:
+          WELCOME: 'ssh pipeline'
+        with:
+          host: ${{ secrets.TX_HOST }}
+          user: ${{ secrets.TX_USER }}
+          pass: ${{ secrets.TX_PASSWORD }}
+          connect_timeout: 15s
+          script: |
+            cd /root/github/labour-day
+            git pull
+            pnpm install
+            pnpm build
+            pm2 restart labour-day
+            
