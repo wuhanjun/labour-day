@@ -2,8 +2,6 @@ name: deploy
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-
 jobs:
   deploy:
     name: deploy
@@ -15,10 +13,6 @@ jobs:
 
       - name: deploy 
         uses: cross-the-world/ssh-pipeline@master
-        on: 
-          push:
-            branches:
-              - main
         env:
           WELCOME: 'ssh pipeline'
         with:
