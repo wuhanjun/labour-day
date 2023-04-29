@@ -10,9 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: ssh pipelines pull 
+      - name: pull code
+        uses: actions/checkout@v2
+
+      - name: deploy 
         uses: cross-the-world/ssh-pipeline@master
+        on: 
+          push:
+            branches:
+              - master
         env:
           WELCOME: 'ssh pipeline'
         with:
